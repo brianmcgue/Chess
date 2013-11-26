@@ -5,6 +5,6 @@ class Knight < SteppingPiece
   end
 
   def to_s
-    color == :black ? '♞' : '♘'
+    color == :black ? "\u265E" : "\u2658"
   end
 end

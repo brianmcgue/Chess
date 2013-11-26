@@ -5,6 +5,6 @@ class Pawn < Piece
   end
 
   def to_s
-    color == :black ? '♟' : '♙'
+    color == :black ? "\u265F" : "\u2659"
   end
 end

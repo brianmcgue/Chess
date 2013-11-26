@@ -1,4 +1,4 @@
-require_relative "pieces"
+require_relative 'pieces'
 class Board
 
   def initialize
@@ -7,12 +7,12 @@ class Board
   end
 
   def to_s
-    output = '  a b c d e f g h\n'
+    output = "  a b c d e f g h\n"
     8.times do |row|
       output += (8-row).to_s
       @grid[row].each do |piece|
         if piece.nil?
-          output += '_'
+          output += ' _'
         else
           output += ' ' + piece.to_s
         end

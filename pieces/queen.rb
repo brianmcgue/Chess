@@ -5,6 +5,6 @@ class Queen < SlidingPiece
   end
 
   def to_s
-    color == :black ? '♛' : '♕'
+    color == :black ? "\u265B" : "\u2655"
   end
 end
