@@ -1,7 +1,11 @@
 require_relative 'sliding_piece.rb'
 class Rook < SlidingPiece
-  def initialize(position, color)
-    super(position, color)
+  def initialize(position, color, board)
+    super(position, color, board)
+  end
+
+  def move_dirs
+    VERT
   end
 
   def to_s

@@ -1,7 +1,11 @@
 require_relative 'stepping_piece.rb'
 class King < SteppingPiece
-  def initialize(position, color)
-    super(position, color)
+  def initialize(position, color, board)
+    super(position, color, board)
+  end
+
+  def move_dirs
+
   end
 
   def to_s

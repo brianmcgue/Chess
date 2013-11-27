@@ -1,7 +1,15 @@
 require_relative 'piece.rb'
 class Pawn < Piece
-  def initialize(position, color)
-    super(position, color)
+  def initialize(position, color, board)
+    super(position, color, board)
+  end
+
+  def moves
+
+  end
+
+  def move_dirs
+
   end
 
   def to_s
