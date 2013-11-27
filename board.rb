@@ -2,33 +2,47 @@ require_relative 'pieces'
 class Board
   attr_reader :grid
 
-  def initialize
+  def initialize(set_up_pieces = true)
     @grid = make_grid
-    set_pieces
+    set_pieces if set_up_pieces
+  end
+
+  def dup
+    dupped_board = Board.new(false)
+    @grid.each_with_index do |row, row_i|
+      row.each_with_index do |piece, col_i|
+        next if piece.nil?
+        dupped_board.grid[row_i][col_i] =
+                piece.class.new([row_i,col_i],piece.color,dupped_board)
+      end
+    end
+    dupped_board
   end
 
   def find_king(color)
-    @grid.each do |row|
-      row.each do |piece|
-        return piece.position if piece.is_a?(King) && piece.color == color
-      end
+    @grid.flatten.each do |piece|
+      return piece.position if piece.is_a?(King) && piece.color == color
     end
   end
 
   def in_check?(color)
     king_position = find_king(color)
-    @grid.each do |row|
-      row.each do |piece|
-        next if piece.color == color
-        return true if piece.moves.include?(king_position)
-      end
+    @grid.flatten.each do |piece|
+      next if piece.nil? || piece.color == color
+      return true if piece.moves.include?(king_position)
     end
     false
   end
 
   def move(start,finish)
+    move!(start,finish) if valid_move?(start,finish)
+  end
+
+  def move!(start,finish)
     raise "No piece here." if @grid[start[0]][start[1]].nil?
-    raise "Not valid move." unless @grid[start[0]][start[1]].moves.include?(finish)
+    unless @grid[start[0]][start[1]].moves.include?(finish)
+      raise "Not valid move."
+    end
     # @grid[finish[0]][finish[1]].position = nil unless @grid[finish[0]][finish[1]].nil?
     @grid[finish[0]][finish[1]] = @grid[start[0]][start[1]]
     @grid[finish[0]][finish[1]].position = finish
@@ -49,6 +63,11 @@ class Board
       output += " #{8-row}\n"
     end
     output + '  a b c d e f g h'
+  end
+
+  def valid_move?(start,finish)
+    this_piece = @grid[start[0]][start[1]]
+    this_piece.valid_moves.include?(finish)
   end
 
   private
@@ -86,5 +105,13 @@ board.move([1,4],[3,4])
 puts board
 board.move([0,3],[4,7])
 puts board
-board.move([0,6],[2,7])
+board.move([6,5],[5,5])
 puts board
+#
+# puts board
+# board.move([6,6],[4,6])
+# puts board
+#
+# puts board
+# board.move([0,6],[2,7])
+# puts board

@@ -26,7 +26,7 @@ class SteppingPiece < Piece
     moves = []
     self.move_dirs.each do |dir|
       move = [@position[0] + dir[0], @position[1] + dir[1]]
-      moves << move if valid_move?(move)
+      moves << move if valid_possible_move?(move)
     end
     moves
   end
