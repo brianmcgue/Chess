@@ -21,7 +21,7 @@ class Piece
 
   def valid_possible_move?(position)
     return false unless in_bounds?(position)
-    piece = @board.grid[position[0]][position[1]]
+    piece = @board[position]
     unless piece.nil?
       return false if piece.color == @color
     end

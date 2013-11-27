@@ -23,7 +23,7 @@ class SlidingPiece < Piece
 
         if valid_possible_move?(move)
           moves << move
-          break unless @board.grid[move[0]][move[1]].nil?
+          break unless @board[move].nil?
         else
           break
         end

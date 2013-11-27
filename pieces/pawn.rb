@@ -9,16 +9,16 @@ class Pawn < Piece
     moves = []
     modifier = (@color == :black ? 1 : -1)
     row = (@color == :black ? 1 : 6)
-    moves << [@position[0]+2*modifier,@position[1]] if @position[0] == row &&
-              @board.grid[@position[0]+2*modifier][@position[1]].nil?
-    moves << [@position[0]+modifier,@position[1]] if
-              @board.grid[@position[0]+modifier][@position[1]].nil?
-    moves << [@position[0]+modifier,@position[1]+1] unless
-              @board.grid[@position[0]+modifier][@position[1]+1].nil? ||
-              @board.grid[@position[0]+modifier][@position[1]+1].color == @color
-    moves << [@position[0]+modifier,@position[1]-1] unless
-              @board.grid[@position[0]+modifier][@position[1]-1].nil? ||
-              @board.grid[@position[0]+modifier][@position[1]-1].color == @color
+    moves << [@position[0] + 2 * modifier, @position[1]] if @position[0] == row &&
+              @board[[@position[0] + 2 * modifier, @position[1]]].nil?
+    moves << [@position[0] + modifier, @position[1]] if
+              @board[[@position[0] + modifier, @position[1]]].nil?
+    moves << [@position[0] + modifier, @position[1] + 1] unless
+              @board[[@position[0] + modifier, @position[1] + 1]].nil? ||
+              @board[[@position[0] + modifier, @position[1] + 1]].color == @color
+    moves << [@position[0] + modifier, @position[1] - 1] unless
+              @board[[@position[0] + modifier, @position[1] - 1]].nil? ||
+              @board[[@position[0] + modifier, @position[1] - 1]].color == @color
     moves
   end
 
