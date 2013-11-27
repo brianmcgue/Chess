@@ -1,5 +1,6 @@
 require_relative 'pieces'
 class Board
+  attr_reader :grid
 
   def initialize
     @grid = make_grid
@@ -38,11 +39,11 @@ class Board
     output = "  a b c d e f g h\n"
     8.times do |row|
       output += (8-row).to_s
-      @grid[row].each do |piece|
+      @grid[row].each_with_index do |piece, i|
         if piece.nil?
-          output += ' _'
+          output += " _"
         else
-          output += ' ' + piece.to_s
+          output += " #{piece.to_s}"
         end
       end
       output += " #{8-row}\n"
@@ -60,9 +61,9 @@ class Board
     pieces.each_with_index do |piece, col|
       [0,7].each do |row|
         if row == 0
-          @grid[row][col] = piece.new([row,col], :black, @board)
+          @grid[row][col] = piece.new([row,col], :black, self)
         else
-          @grid[row][col] = piece.new([row,col], :white, @board)
+          @grid[row][col] = piece.new([row,col], :white, self)
         end
       end
     end
@@ -70,9 +71,9 @@ class Board
     [1,6].each do |row|
       8.times do |col|
         if row == 1
-          @grid[row][col] = Pawn.new([row,col], :black, @board)
+          @grid[row][col] = Pawn.new([row,col], :black, self)
         else
-          @grid[row][col] = Pawn.new([row,col], :white, @board)
+          @grid[row][col] = Pawn.new([row,col], :white, self)
         end
       end
     end
@@ -80,4 +81,10 @@ class Board
 end
 
 board = Board.new
+puts board
+board.move([1,4],[3,4])
+puts board
+board.move([0,3],[4,7])
+puts board
+board.move([0,6],[2,7])
 puts board
