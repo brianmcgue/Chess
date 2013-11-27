@@ -60,9 +60,9 @@ class Board
     pieces.each_with_index do |piece, col|
       [0,7].each do |row|
         if row == 0
-          @grid[row][col] = piece.new([row,col], :black, board)
+          @grid[row][col] = piece.new([row,col], :black, @board)
         else
-          @grid[row][col] = piece.new([row,col], :white, board)
+          @grid[row][col] = piece.new([row,col], :white, @board)
         end
       end
     end
@@ -70,9 +70,9 @@ class Board
     [1,6].each do |row|
       8.times do |col|
         if row == 1
-          @grid[row][col] = Pawn.new([row,col], :black, board)
+          @grid[row][col] = Pawn.new([row,col], :black, @board)
         else
-          @grid[row][col] = Pawn.new([row,col], :white, board)
+          @grid[row][col] = Pawn.new([row,col], :white, @board)
         end
       end
     end
