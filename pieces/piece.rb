@@ -1,3 +1,4 @@
+require_relative 'board.rb'
 class Piece
   attr_accessor :position, :color, :board
 

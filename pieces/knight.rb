@@ -5,7 +5,7 @@ class Knight < SteppingPiece
   end
 
   def move_dirs
-
+    KNIGHT
   end
 
   def to_s

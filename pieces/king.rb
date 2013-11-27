@@ -5,7 +5,7 @@ class King < SteppingPiece
   end
 
   def move_dirs
-
+    KING
   end
 
   def to_s
