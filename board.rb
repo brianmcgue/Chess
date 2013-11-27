@@ -7,6 +7,15 @@ class Board
     set_pieces if set_up_pieces
   end
 
+  def checkmate?(color)
+    return false unless in_check?(color)
+
+    @grid.flatten.none? do |piece|
+      next if piece.nil? || piece.color != color
+      piece.valid_moves.any?
+    end
+  end
+
   def dup
     dupped_board = Board.new(false)
     @grid.each_with_index do |row, row_i|
@@ -35,13 +44,18 @@ class Board
   end
 
   def move(start,finish)
-    move!(start,finish) if valid_move?(start,finish)
+    begin
+      move!(start,finish) if valid_move?(start,finish)
+    rescue InvalidMoveError => e
+      puts "Invalid Move: #{e.message}"
+    end
   end
 
   def move!(start,finish)
-    raise "No piece here." if @grid[start[0]][start[1]].nil?
-    unless @grid[start[0]][start[1]].moves.include?(finish)
-      raise "Not valid move."
+    if @grid[start[0]][start[1]].nil?
+      raise InvalidMoveError.new "No piece here."
+    elsif !@grid[start[0]][start[1]].moves.include?(finish)
+      raise InvalidMoveError.new "Not in list of possible moves."
     end
     # @grid[finish[0]][finish[1]].position = nil unless @grid[finish[0]][finish[1]].nil?
     @grid[finish[0]][finish[1]] = @grid[start[0]][start[1]]
@@ -101,16 +115,18 @@ end
 
 board = Board.new
 puts board
+board.move([6,5],[5,5])
+puts board
 board.move([1,4],[3,4])
+puts board
+board.move([6,6],[4,6])
 puts board
 board.move([0,3],[4,7])
 puts board
-board.move([6,5],[5,5])
-puts board
+p board.checkmate?(:white)
 #
 # puts board
-# board.move([6,6],[4,6])
-# puts board
+
 #
 # puts board
 # board.move([0,6],[2,7])
