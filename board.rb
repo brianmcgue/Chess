@@ -1,3 +1,4 @@
+require 'colorize'
 require_relative 'pieces'
 class Board
   attr_reader :grid
@@ -71,19 +72,27 @@ class Board
   end
 
   def to_s
-    output = "  a b c d e f g h\n"
+    output = "  a  b  c  d  e  f  g  h \n"
     8.times do |row|
       output += (8-row).to_s
       @grid[row].each_with_index do |piece, i|
         if piece.nil?
-          output += " _"
+          if row.odd? ^ i.odd?
+            output += "   ".colorize(:color => :black, :background => :light_white)
+          else
+            output += "   ".colorize(:color => :black, :background => :white)
+          end
         else
-          output += " #{piece.to_s}"
+          if row.odd? ^ i.odd?
+            output += " #{piece.to_s} ".colorize(:color => :black, :background => :light_white)
+          else
+            output += " #{piece.to_s} ".colorize(:color => :black, :background => :white)
+          end
         end
       end
       output += " #{8-row}\n"
     end
-    output + '  a b c d e f g h'
+    output + '  a  b  c  d  e  f  g  h'
   end
 
   def valid_move?(start,finish)

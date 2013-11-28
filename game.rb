@@ -25,6 +25,7 @@ class Game
   private
   def get_input
     puts @board
+    puts "Check!" if @board.in_check?(@turn)
     begin
       puts "#{@turn.to_s.capitalize}, pick a piece to move:"
       start = gets.chomp.downcase
@@ -46,6 +47,7 @@ class Game
       @turn = (@turn == :white ? :black : :white)
     end
     puts @board
+    @turn = (@turn == :white ? :black : :white)
     puts "Checkmate! #{@turn.to_s.capitalize} wins!"
   end
 
