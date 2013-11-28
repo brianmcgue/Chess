@@ -9,10 +9,6 @@ class SlidingPiece < Piece
           [-1, 0],
           [ 0,-1]]
 
-  def initialize(position, color, board)
-    super(position, color, board)
-  end
-
   def moves
     moves = []
     self.move_dirs.each do |dir|

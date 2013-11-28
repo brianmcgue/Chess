@@ -18,10 +18,6 @@ class SteppingPiece < Piece
             [ 1,-2],
             [ 2,-1]]
 
-  def initialize(position, color, board)
-    super(position, color, board)
-  end
-
   def moves
     moves = []
     self.move_dirs.each do |dir|

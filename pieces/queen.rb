@@ -1,9 +1,5 @@
 require_relative 'sliding_piece.rb'
 class Queen < SlidingPiece
-  def initialize(position, color, board)
-    super(position, color, board)
-  end
-
   def move_dirs
     DIAG + VERT
   end

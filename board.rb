@@ -76,18 +76,11 @@ class Board
     8.times do |row|
       output += (8-row).to_s
       @grid[row].each_with_index do |piece, i|
+        background = (row.odd? ^ i.odd? ? :light_white : :white)
         if piece.nil?
-          if row.odd? ^ i.odd?
-            output += "   ".colorize(:color => :black, :background => :light_white)
-          else
-            output += "   ".colorize(:color => :black, :background => :white)
-          end
+          output += "   ".colorize(:color => :black, :background => background)
         else
-          if row.odd? ^ i.odd?
-            output += " #{piece.to_s} ".colorize(:color => :black, :background => :light_white)
-          else
-            output += " #{piece.to_s} ".colorize(:color => :black, :background => :white)
-          end
+          output += " #{piece.to_s} ".colorize(:color => :black, :background => background)
         end
       end
       output += " #{8-row}\n"
@@ -113,21 +106,15 @@ class Board
     pieces = [Rook,Knight,Bishop,Queen,King,Bishop,Knight,Rook]
     pieces.each_with_index do |piece, col|
       [0,7].each do |row|
-        if row == 0
-          self[[row,col]] = piece.new([row,col], :black, self)
-        else
-          self[[row,col]] = piece.new([row,col], :white, self)
-        end
+        color = (row == 0 ? :black : :white)
+        self[[row,col]] = piece.new([row,col], color, self)
       end
     end
 
     [1,6].each do |row|
       8.times do |col|
-        if row == 1
-          self[[row,col]] = Pawn.new([row,col], :black, self)
-        else
-          self[[row,col]] = Pawn.new([row,col], :white, self)
-        end
+        color = (row == 1 ? :black : :white)
+        self[[row,col]] = Pawn.new([row,col], :black, self)
       end
     end
   end
