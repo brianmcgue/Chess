@@ -71,6 +71,15 @@ class Board
     @grid.flatten.compact
   end
 
+  def stalemate?(color)
+    return false if in_check?(color)
+
+    pieces.none? do |piece|
+      next if piece.color != color
+      piece.valid_moves.any?
+    end
+  end
+
   def to_s
     output = "  a  b  c  d  e  f  g  h \n"
     8.times do |row|
@@ -114,7 +123,7 @@ class Board
     [1,6].each do |row|
       8.times do |col|
         color = (row == 1 ? :black : :white)
-        self[[row,col]] = Pawn.new([row,col], :black, self)
+        self[[row,col]] = Pawn.new([row,col], color, self)
       end
     end
   end

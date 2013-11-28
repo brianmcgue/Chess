@@ -18,8 +18,8 @@ class Game
                 'g' => 6,
                 'h' => 7 }
 
-    input_arr = input.split('')
-    position = [ 8-Integer(input_arr[1]), convert[input_arr[0]] ]
+    letter, digit = input.split('')
+    position = [ 8-Integer(digit), convert[letter] ]
   end
 
   private
@@ -42,13 +42,17 @@ class Game
   end
 
   def play
-    until @board.checkmate?(@turn)
+    until @board.checkmate?(@turn) || @board.stalemate?(@turn)
       play_turn
       @turn = (@turn == :white ? :black : :white)
     end
     puts @board
-    @turn = (@turn == :white ? :black : :white)
-    puts "Checkmate! #{@turn.to_s.capitalize} wins!"
+    if @board.in_check?(@turn)
+      @turn = (@turn == :white ? :black : :white)
+      puts "Checkmate! #{@turn.to_s.capitalize} wins!"
+    else
+      puts "Stalemate! Nobody wins."
+    end
   end
 
   def play_turn
